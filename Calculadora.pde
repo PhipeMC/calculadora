@@ -1,7 +1,6 @@
 Button[] btnList;
-String operation = "";
-String separator = "";
-Tolteca operations;
+ArrayList<String> operacion; // 1 | 15 | 4
+int limit;
 
 void setup() {
   size(415, 470);
@@ -9,7 +8,7 @@ void setup() {
   surface.setResizable(true);
   background(#555555);
   buttonsCreate();
-  operations = new Tolteca();
+  operacion = new ArrayList<String>();
 }
 
 void draw() {
@@ -18,7 +17,11 @@ void draw() {
   noStroke();
   fill(0);
   textSize(25);
-  text(operation, 0, 50);
+  if (operacion.size()>0) {
+    if (operacion.get(operacion.size()-1) != null) {
+      text(operacion.get(operacion.size()-1), 0, 50);
+    }
+  }
 }
 
 void manageButtons() {
@@ -41,21 +44,22 @@ void mouseReleased() {
 void btnPressed() {
   for (Button btn : btnList) {
     String temp = btn.press(mouseX, mouseY, btnList);
-    //print(temp+"\n");
-    if (temp != null) {
-      if (temp.equals("show")) {
-        if (this.width == 415) {
-          frame.setSize(730, 470);
-          break;
+    print(temp+"\n");
+    if (limit<2 || isOperador(temp))
+      if (temp != null) {
+        if (temp.equals("show")) {
+          if (this.width == 415) {
+            frame.setSize(730, 470);
+            break;
+          } else {
+            frame.setSize(415, 470);
+            break;
+          }
         } else {
-          frame.setSize(415, 470);
-          break;
+          operacion.add(operacion.size(), temp);
+          limit++;
         }
-      }else{
-        operations.getValue(temp);
-        break;
       }
-    }
   }
 }
 
@@ -103,4 +107,14 @@ void buttonsCreate() {
 
     new Button(525, 150, 100, 75, "19.png", #323232)
   };
+}
+
+public boolean isOperador(String value) {
+  char[] symbols = new char[]{'+', '-', '*', '/'};
+  for (char c : symbols) {
+    if (value.charAt(0) == c) {
+      return true;
+    }
+  }
+  return false;
 }

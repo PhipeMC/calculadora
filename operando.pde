@@ -1,8 +1,7 @@
 public class operando {
-  int unidad;
-  int decena;
-  int centena;
-  int unMillar;
+  int unidad; // *1
+  int decena; // *20
+  int centena; //*400
   int contador;
 
   public operando(String s) {
@@ -15,14 +14,6 @@ public class operando {
     case 1:
       decena = Integer.valueOf(s);
       break;
-    case 2:
-      centena = Integer.valueOf(s);
-      break;
-    case 3:
-      unMillar = Integer.valueOf(s);
-      break;
     }
   }
-  
-  
 }

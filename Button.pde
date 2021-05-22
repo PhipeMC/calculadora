@@ -66,7 +66,7 @@ class Button {
   }
 
   public String getValue(String file) {
-    switch(file) { //<>//
+    switch(file) {
     case "00.png": 
       return "0";
     case "01.png": 
