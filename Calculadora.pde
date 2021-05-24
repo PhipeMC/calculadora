@@ -1,6 +1,7 @@
 Button[] btnList;
 ArrayList<String> operacion; // 1 | 15 | 4
 int limit;
+//String[] resultSum;
 
 void setup() {
   size(415, 470);
@@ -9,6 +10,7 @@ void setup() {
   background(#555555);
   buttonsCreate();
   operacion = new ArrayList<String>();
+  //7resultSum=new String[10];
 }
 
 void draw() {
@@ -19,7 +21,12 @@ void draw() {
   textSize(25);
   if (operacion.size()>0) {
     if (operacion.get(operacion.size()-1) != null) {
-      text(operacion.get(operacion.size()-1), 0, 50);
+      //text(operacion.get(operacion.size()-1), 0, 50);
+      int pos = 0;
+      for (int i=0; i<operacion.size(); i++) {
+        text(operacion.get(i), pos, 50);
+        pos+=20;
+      }
     }
   }
 }
@@ -41,12 +48,15 @@ void mouseReleased() {
   btnReleased();
 }
 
+/// 
 void btnPressed() {
   for (Button btn : btnList) {
     String temp = btn.press(mouseX, mouseY, btnList);
-    print(temp+"\n");
-    if (limit<2 || isOperador(temp))
+
+    if (limit<=2 || isOperador(temp)) {
+
       if (temp != null) {
+        print(temp+" boton presionado \n");
         if (temp.equals("show")) {
           if (this.width == 415) {
             frame.setSize(730, 470);
@@ -55,20 +65,32 @@ void btnPressed() {
             frame.setSize(415, 470);
             break;
           }
+        } else if(temp.equals("=")){
+          suma();
         } else {
+          print(operacion.size()+" "+temp+" "+limit+"\n");
+
           operacion.add(operacion.size(), temp);
-          limit++;
+          if (limit==2) {
+            limit =0;
+          } else {
+            limit++;
+          }
         }
       }
+    }
   }
 }
 
+///CUANDO SE SUELTA UN BOTON
 void btnReleased() {
   for (Button btn : btnList) {
     btn.release();
   }
 }
 
+
+///SE CREAN LOS BOTONES
 void buttonsCreate() {
   btnList = new Button[]{
     //Primera fila
@@ -109,6 +131,8 @@ void buttonsCreate() {
   };
 }
 
+
+///DETECTA SI ES UN OPERADOR
 public boolean isOperador(String value) {
   char[] symbols = new char[]{'+', '-', '*', '/'};
   for (char c : symbols) {
@@ -116,5 +140,48 @@ public boolean isOperador(String value) {
       return true;
     }
   }
+
   return false;
+}
+
+
+
+/**
+ * Este método se encarga de realizar la suma entre los numeros ingresado por el usuario
+ * @param ninguno
+ * @return Arreglo de string con los valores separados en vigesimal 
+*/
+String[] suma() {
+  print("Entra a suma\n");
+  String[] resultSum;
+  String tmp="";
+  int sum1=0;
+  for (int i=0; i<operacion.size(); i++) {  
+    if (operacion.get(i).charAt(0)!='+') {
+       //print(operacion.get(i)+"\n");
+       if(i==operacion.size()-1){
+         sum1+=Integer.valueOf(operacion.get(i));
+       }else{
+         if(operacion.get(i+1).charAt(0)=='+'){
+           sum1+=Integer.valueOf(operacion.get(i));
+         }else{
+           sum1+=Integer.valueOf(operacion.get(i))*20;
+         }
+       }
+    }
+    
+    print("valor "+sum1+"\n");
+  }
+  while(sum1>19){
+    tmp=" "+sum1%20+tmp;
+    sum1=sum1/20;
+    print(tmp+"\n");
+  }
+  tmp=""+sum1+tmp;
+  print(tmp+"\n");
+  //resultSum[0]=""+sum1/20;
+  //resultSum[pos]=""+sum1%20;
+  resultSum=split(tmp,' ');
+  printArray(resultSum);
+  return resultSum;
 }
