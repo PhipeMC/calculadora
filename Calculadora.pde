@@ -66,7 +66,8 @@ void btnPressed() {
             break;
           }
         } else if(temp.equals("=")){
-          suma();
+          //suma();
+          resta();
         } else {
           print(operacion.size()+" "+temp+" "+limit+"\n");
 
@@ -175,13 +176,62 @@ String[] suma() {
   while(sum1>19){
     tmp=" "+sum1%20+tmp;
     sum1=sum1/20;
-    print(tmp+"\n");
+    //print(tmp+"\n");
   }
   tmp=""+sum1+tmp;
   print(tmp+"\n");
   //resultSum[0]=""+sum1/20;
   //resultSum[pos]=""+sum1%20;
   resultSum=split(tmp,' ');
-  printArray(resultSum);
+  //printArray(resultSum);
   return resultSum;
+}
+
+String[] resta(){
+  
+  ArrayList<Integer> valor1=new ArrayList();
+  ArrayList<Integer> valor2=new ArrayList();
+  boolean izq=true;
+  
+  for(int i=0; i<operacion.size();i++){
+    if(operacion.get(i).charAt(0)=='-'){
+      izq=false;
+    }
+    
+    if(izq){
+      valor1.add(Integer.valueOf(operacion.get(i)));
+    }else{
+      if(operacion.get(i).charAt(0)!='-'){
+        valor2.add(Integer.valueOf(operacion.get(i)));
+      }
+    }
+  }
+  
+  int res1=0,res2=0;
+  
+  printArray(valor1);
+  printArray(valor2);
+  for(int i:valor1){
+    res1+=i;
+    print(i+" ");
+  }
+ 
+  for(int i:valor2){
+    res2+=i;
+    print(i+" ");
+  }
+  println();
+  int resFinal=res1-res2;
+  ArrayList<Integer> valores=new ArrayList();
+  while(resFinal>19){
+    valores.add(resFinal%20);
+    resFinal=resFinal/20;
+  }
+  valores.add(resFinal);
+  String[] arrAux =new String[valores.size()];
+  for(int i=0;i<valores.size();i++){
+    arrAux[i]=valores.get(i).toString();
+  }
+  printArray(valores);
+  return arrAux;
 }
