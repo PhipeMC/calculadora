@@ -236,7 +236,7 @@ public void displayResult() {
       case "-":
         result = resta();
         print("\n");
-        printArray(result);
+        //printArray(result);
         print("\n");
         break;
       case "*":
@@ -310,31 +310,36 @@ String[] resta() {
   }
 
   int res1=0, res2=0;
-
+  int multipX=(int)Math.pow(20,valor1.size()-1);
+  int multipY=(int)Math.pow(20,valor2.size()-1);
   printArray(valor1);
   printArray(valor2);
   for (int i : valor1) {
-    res1+=i;
+    res1+=i*multipX;
     print(i+" ");
   }
 
   for (int i : valor2) {
-    res2+=i;
+    res2+=i*multipY;
     print(i+" ");
   }
   println();
   int resFinal=res1-res2;
+  println("resta= "+resFinal);
   ArrayList<Integer> valores=new ArrayList();
   while (resFinal>19) {
     valores.add(resFinal%20);
     resFinal=resFinal/20;
   }
+  if(resFinal<0){
+    resFinal=0;
+  }
   valores.add(resFinal);
   String[] arrAux =new String[valores.size()];
   for (int i=0; i<valores.size(); i++) {
-    arrAux[i]=valores.get(i).toString();
+    arrAux[i]=valores.get(valores.size()-i-1).toString();
   }
-  printArray(valores);
+  printArray(arrAux);
   return arrAux;
 }
 
