@@ -1,8 +1,8 @@
 class Button {
   PImage icon;
-  int x, y; // Las coordenadas del boton
-  int width, height; // Tamaño del boton
-  color backcolor; // Color de fondo para el boton
+  int x, y;  // Las coordenadas del boton 
+  int width, height;  // Tamaño del boton
+  color backcolor;  // Color de fondo para el boton
   boolean pressed = false; // Detecta si el boton esta presionado
   boolean over = false;
   String fileName = "";
@@ -26,29 +26,15 @@ class Button {
   }
 
   void update() {
-    if ((mouseX >= x) && (mouseX <= x+width) && (mouseY >= y) && (mouseY <= y+height)) {
+    if ((mouseX >= x) && (mouseX <= x+width) && 
+      (mouseY >= y) && (mouseY <= y+height)) {
       over = true;
     } else {
       over = false;
     }
   }
-  
-    void display() {
-    if (over == true) {
-      fill(#424242);
-      stroke(#888888);
-      rect(x, y, width, height);
-      image(icon, x+(width/2-icon.width/2), y+(height/2-icon.height/2));
-    } else {
-      fill(backcolor);
-      stroke(#313131);
-      rect(x, y, width, height);
-      noStroke();
-      image(icon, x+(width/2-icon.width/2), y+(height/2-icon.height/2));
-    }
-  }
 
-  String press(float mx, float my, Button[] btnList) {
+  String press(float mx, float my, Button[] list) {
     if ((mx >= x) && (mx <= x+width) && (my >= y) && (my <= y+height)) {
       for (Button btn : btnList) {
         if (btn == this) {
@@ -64,6 +50,20 @@ class Button {
     pressed = false;
   }
 
+  void display() {
+    if (over == true) {
+      fill(#424242);
+      stroke(#888888);
+      rect(x, y, width, height);
+      image(icon, x+(width/2-icon.width/2), y+(height/2-icon.height/2));
+    } else {
+      fill(backcolor);
+      stroke(#313131);
+      rect(x, y, width, height);
+      noStroke();
+      image(icon, x+(width/2-icon.width/2), y+(height/2-icon.height/2));
+    }
+  }
 
   public String getValue(String file) {
     switch(file) {
@@ -117,8 +117,10 @@ class Button {
       return "/";
     case "transfer_48px.png": 
       return "show";
-    case "equal_sign_48px.png": 
-      return "=";
+    case "clear_symbol_48px.png":
+      return "clear";
+    case "equal_sign_48px.png":
+      return "equals";
     }
     return null;
   }
