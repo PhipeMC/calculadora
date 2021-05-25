@@ -68,6 +68,7 @@ void btnPressed() {
         } else if(temp.equals("=")){
           //suma();
           resta();
+          //multi();
         } else {
           print(operacion.size()+" "+temp+" "+limit+"\n");
 
@@ -251,4 +252,54 @@ String[] resta(){
   }
   printArray(arrAux);
   return arrAux;
+}
+
+/**
+ * Este método se encarga de realizar la multiplicación entre dos
+ * numeros ingresado por el usuario
+ * @param ninguno
+ * @return Arreglo de string con los valores del resultado separados en vigesimal 
+*/
+String[] multi() {
+  print("Entra a multiplicación\n");
+  boolean x=false;
+  String[] result;
+  String tmp="";
+  int val1=0, val2=0, res=0;
+  for (int i=0; i<operacion.size(); i++) { 
+    if (operacion.get(i).charAt(0)!='*') {
+       //print(operacion.get(i)+"\n");
+       if(i==operacion.size()-1){
+         val2+=Integer.valueOf(operacion.get(i));
+         print("V2="+val2);
+       }else{
+         if(operacion.get(i+1).charAt(0)=='*'){
+           val1+=Integer.valueOf(operacion.get(i));
+           print("V1="+val1);
+         }else if(x==false){
+           val1+=Integer.valueOf(operacion.get(i))*20;
+           print("V1="+val1);
+         }
+       }
+    }else if(operacion.get(i).charAt(0)=='*'){
+      if(i!=operacion.size()-2){
+           val2+=Integer.valueOf(operacion.get(i+1))*20;
+           x=true;
+           print("V2="+val2);
+      }
+    }
+    
+    
+  }
+  x=false;
+  print("\nvalor 1 "+val1+"\n"+"valor 2 "+val2+"\n");
+  res = val1*val2;
+  while(res>19){
+    tmp=" "+res%20+tmp;
+    res=res/20;
+  }
+  tmp=""+res+tmp;
+  print(tmp+"\n");
+  result=split(tmp,' ');
+  return result;
 }
