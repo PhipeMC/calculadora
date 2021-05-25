@@ -187,6 +187,15 @@ String[] suma() {
   return resultSum;
 }
 
+
+/*
+    Método encargado de realizar la resta de los valores ingresados en
+    la calculadora, se guarda en una lista los valores de la izquierda 
+    del signo - en otra lista se guardan los valores a la derecha del 
+    signo -. Se realiza la resta y se retorna en un arreglo, los valores
+    correspondientes a unidades|decenas|centenas|millares en el sistema
+    vigesimal.
+*/
 String[] resta(){
   
   ArrayList<Integer> valor1=new ArrayList();
@@ -200,9 +209,11 @@ String[] resta(){
     
     if(izq){
       valor1.add(Integer.valueOf(operacion.get(i)));
+      
     }else{
       if(operacion.get(i).charAt(0)!='-'){
         valor2.add(Integer.valueOf(operacion.get(i)));
+        
       }
     }
   }
@@ -211,13 +222,19 @@ String[] resta(){
   
   printArray(valor1);
   printArray(valor2);
+  
+  int multipX=(int)Math.pow(20,valor1.size()-1);
+  int multipY=(int)Math.pow(20,valor2.size()-1);
+  
   for(int i:valor1){
-    res1+=i;
+    res1+=i*multipX;
+    multipX=multipX/20;
     print(i+" ");
   }
  
   for(int i:valor2){
-    res2+=i;
+    res2+=i*multipY;
+    multipY=multipY/20;
     print(i+" ");
   }
   println();
@@ -228,10 +245,10 @@ String[] resta(){
     resFinal=resFinal/20;
   }
   valores.add(resFinal);
-  String[] arrAux =new String[valores.size()];
+  String[] arrAux ={0+"",0+"",0+"",0+""};
   for(int i=0;i<valores.size();i++){
-    arrAux[i]=valores.get(i).toString();
+    arrAux[i]=valores.get(valores.size()-i-1).toString();
   }
-  printArray(valores);
+  printArray(arrAux);
   return arrAux;
 }
