@@ -235,15 +235,15 @@ public void displayResult() {
         break;
       case "-":
         result = resta();
-        print("\n");
-        //printArray(result);
-        print("\n");
+        last = null;
         break;
       case "*":
         result = multi();
+        last = null;
         break;
       case "/":
-        result = divi();
+        result = divicion();
+        last = null;
         break;
       }
     }
@@ -391,8 +391,51 @@ String[] multi() {
   return result;
 }
 
-String[] divi() {
-  return null;
+/**
+ * Este método se encarga de realizar la division entre dos
+ * numeros ingresado por el usuario
+ * @return Arreglo de string con los valores del resultado separados en vigesimal 
+ */
+String[] divicion() {
+  print("entra a la Divicion\n");
+  boolean x=false;
+  String[] result;
+  String tmp="";
+  int val1=0, val2=0, res=0;
+  for (int i=0; i<operacion.size(); i++) { 
+    if (operacion.get(i).charAt(0)!='/') {
+      //print(operacion.get(i)+"\n");
+      if (i==operacion.size()-1) {
+        val2+=Integer.valueOf(operacion.get(i));
+        print("V2="+val2);
+      } else {
+        if (operacion.get(i+1).charAt(0)=='/') {
+          val1+=Integer.valueOf(operacion.get(i));
+          print("V1="+val1);
+        } else if (x==false) {
+          val1+=Integer.valueOf(operacion.get(i))*20;
+          print("V1="+val1);
+        }
+      }
+    } else if (operacion.get(i).charAt(0)=='/') {
+      if (i!=operacion.size()-2) {
+        val2+=Integer.valueOf(operacion.get(i+1))*20;
+        x=true;
+        print("V2="+val2);
+      }
+    }
+  }
+  x=false;
+  print("\nvalor 1 "+val1+"\n"+"valor 2 "+val2+"\n");
+  res =  Math.round(val1/val2);
+  while (res>19) {
+    tmp=" "+res%20+tmp;
+    res=res/20;
+  }
+  tmp=""+res+tmp;
+  print(tmp+"\n");
+  result=split(tmp, ' ');
+  return result;
 }
 
 /**
